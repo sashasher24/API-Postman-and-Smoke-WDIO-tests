@@ -37,10 +37,18 @@ describe('List of banks page', () => {
     })
 
     it('should have working breadcrumbs', async() => {
-        await FailedBankListPage.checkBreadcrumIsRedirectionCorrectly('Bank failures', '/bank-failures')
+        await FailedBankListPage.checkBreadcrumbIsRedirectingCorrectly('Bank failures', '/bank-failures')
     })
 
     it('should have a working table search', async() => {
         await FailedBankListPage.searchBank('silic', 1)
+    })
+
+    it('should have link to bank page', async() => {
+        await FailedBankListPage.checkBankPageLink('Almena State Bank', '/almenastate')
+    })
+
+    it('should have wotking page navigation', async() => {
+        await FailedBankListPage.checkPageNavigation(2)
     })
 })
