@@ -6,7 +6,7 @@ class FailedBankListPage extends Page {
     }
 
     get allTableRows() {
-        return $$('.dataTables-content-main > tr')
+        return $$('.dataTables-content-main tr')
     }
 
     get breadcrumbs() {
