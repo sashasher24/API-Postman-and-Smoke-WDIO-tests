@@ -1,582 +1,807 @@
 {
-	"info": {
-		"_postman_id": "05cd652d-057f-4432-a269-0d67ae3cc22c",
-		"name": "Breweries collection",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "14400179"
-	},
-	"item": [
-		{
-			"name": "Tests",
-			"item": [
-				{
-					"name": "GetBreweries",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"pm.test('Types of values in the response are correct', function() {\r",
-									"    pm.expect(jsonData).to.be.an('array');\r",
-									"    pm.expect(jsonData[0].id).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].name).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].brewery_type).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].address_1).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].city).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].state_province).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].postal_code).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].country).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].longitude).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].latitude).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].phone).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].website_url).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].state).to.be.a('string');\r",
-									"    pm.expect(jsonData[0].street).to.be.a('string');\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetByCity",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Returned data has the correct city', function () {\r",
-									"    let jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData[0].city).to.eql('San Diego');\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?by_city=san_diego",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "by_city",
-									"value": "san_diego"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetByDist",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Response data has right long and lat', function () {\r",
-									"    let jsonData = pm.response.json();\r",
-									"\r",
-									"    pm.expect(jsonData[0].latitude).to.include(environment.latitude);\r",
-									"    pm.expect(jsonData[0].longitude).to.include(environment.longitude);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?by_dist={{latitude}},{{longitude}}",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "by_dist",
-									"value": "{{latitude}},{{longitude}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetByName",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Response data has the correct name', function () {\r",
-									"    let jsonData = pm.response.json();\r",
-									"\r",
-									"    pm.expect(jsonData[0].name).to.include(environment.name);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?by_name={{name}}",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "by_name",
-									"value": "{{name}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetByState",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Returned data has the correct city', function () {\r",
-									"    let jsonData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(jsonData[0].state).to.eql('New York');\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?by_state=new_york",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "by_state",
-									"value": "new_york"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetByPostal",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Returned data has the correct postal code', function () {\r",
-									"    let jsonData = pm.response.json();\r",
-									"\r",
-									"    pm.expect(jsonData[0].postal_code).to.include(environment.postal);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?by_postal={{postal}}",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "by_postal",
-									"value": "{{postal}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetByType",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Returned data has the correct type', function () {\r",
-									"    let jsonData = pm.response.json();\r",
-									"\r",
-									"    pm.expect(jsonData[0].brewery_type).to.include(environment.type);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?by_type={{type}}",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "by_type",
-									"value": "{{type}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetPage",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?page=2&per_page=5",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "2"
-								},
-								{
-									"key": "per_page",
-									"value": "5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetPerPage",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(`Returned data has ${environment.per_page} objects`, function () {\r",
-									"    let jsonData = pm.response.json();\r",
-									"\r",
-									"    pm.expect(jsonData).to.have.length(environment.per_page);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?per_page=2",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "per_page",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetSorted",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Response data is sorted by Name', function() {\r",
-									"    let jsonData = pm.response.json();\r",
-									"    let names = jsonData.map(el => el.name);\r",
-									"    console.log(names);\r",
-									"    console.log(names.sort((a, b) => a.localeCompare(b)))\r",
-									"    pm.expect(names).to.eql(names.sort((a, b) => a.localeCompare(b)));\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?sort=name:asc",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "sort",
-									"value": "name:asc"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"pm.test('Status code is 200', function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Negative tests",
-			"item": [
-				{
-					"name": "GetByDistOnlyLatitude",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400 with only latitude\", function () {\r",
-									"    pm.response.to.have.status(400);\r",
-									"});\r",
-									"\r",
-									"pm.test('Response body has correct error message', function () {\r",
-									"    pm.expect(pm.response.text()).to.include('must provide latitude and longitude');\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?by_dist=38.8977",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "by_dist",
-									"value": "38.8977"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetByNonExistentType",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400 with non existent type\", function () {\r",
-									"    pm.response.to.have.status(400);\r",
-									"});\r",
-									"\r",
-									"pm.test('Response body has correct error message', function () {\r",
-									"    pm.expect(pm.response.text()).to.include('type must include one of these types');\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://api.openbrewerydb.org/v1/breweries?by_type=type",
-							"protocol": "https",
-							"host": [
-								"api",
-								"openbrewerydb",
-								"org"
-							],
-							"path": [
-								"v1",
-								"breweries"
-							],
-							"query": [
-								{
-									"key": "by_type",
-									"value": "type"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					"pm.test('Content-Type is application/json', function () {",
-					"    pm.response.to.have.header('Content-Type', 'application/json; charset=utf-8');",
-					"});"
-				]
-			}
-		}
-	]
+    "info": {
+        "_postman_id": "05cd652d-057f-4432-a269-0d67ae3cc22c",
+        "name": "Breweries collection",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "14400179"
+    },
+    "item": [{
+            "name": "Tests",
+            "item": [{
+                    "name": "GetBreweries",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "const jsonData = pm.response.json();\r",
+                                "\r",
+                                "pm.test('Types of values in the response are correct', function() {\r",
+                                "    pm.expect(jsonData).to.be.an('array');\r",
+                                "    pm.expect(jsonData[0].id).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].name).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].brewery_type).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].address_1).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].city).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].state_province).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].postal_code).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].country).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].longitude).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].latitude).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].phone).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].website_url).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].state).to.be.a('string');\r",
+                                "    pm.expect(jsonData[0].street).to.be.a('string');\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByCity",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test('Returned data has the correct city', function () {\r",
+                                "    let jsonData = pm.response.json();\r",
+                                "    \r",
+                                "    _.each(jsonData, brewery => {\r",
+                                "        pm.expect(brewery.city).to.eql('San Diego');\r",
+                                "        pm.expect(brewery.country).to.eql('United States');\r",
+                                "        pm.expect(brewery.state).to.eql('California');\r",
+                                "    })\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_city=san_diego",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_city",
+                                "value": "san_diego"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByDist",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test('Response data has right long and lat', function () {\r",
+                                "    let jsonData = pm.response.json();\r",
+                                "\r",
+                                "    let distDifferencesArr = jsonData.map(brewery => \r",
+                                "        Math.abs(brewery.latitude - environment.latitude) + \r",
+                                "        Math.abs(brewery.longitude - environment.longitude)\r",
+                                "    );\r",
+                                "\r",
+                                "    let expectedClosest = Math.min(...distDifferencesArr);\r",
+                                "    let actualClosest = Math.abs(jsonData[0].latitude - environment.latitude) + \r",
+                                "        Math.abs(jsonData[0].longitude - environment.longitude)\r",
+                                "\r",
+                                "    pm.expect(jsonData[0].latitude).to.include(environment.latitude);\r",
+                                "    pm.expect(jsonData[0].longitude).to.include(environment.longitude);\r",
+                                "    pm.expect(expectedClosest).to.eql(actualClosest);\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_dist={{latitude}},{{longitude}}",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_dist",
+                                "value": "{{latitude}},{{longitude}}"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByName",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test('Response data has the correct name', function () {\r",
+                                "    let jsonData = pm.response.json();\r",
+                                "\r",
+                                "    _.each(jsonData, brewery => {\r",
+                                "        pm.expect(brewery.name).to.include(environment.name);\r",
+                                "    })\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_name={{name}}",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_name",
+                                "value": "{{name}}"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByState",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test('Returned data has the correct state', function () {\r",
+                                "    let jsonData = pm.response.json();\r",
+                                "    \r",
+                                "    _.each(jsonData, brewery => {\r",
+                                "        pm.expect(brewery.state).to.eql('New York');\r",
+                                "    })\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_state=new_york",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_state",
+                                "value": "new_york"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByPostal",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test('Returned data has the correct postal code', function () {\r",
+                                "    let jsonData = pm.response.json();\r",
+                                "\r",
+                                "    _.each(jsonData, brewery => {\r",
+                                "        pm.expect(brewery.postal_code).to.include(environment.postal);\r",
+                                "    })\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_postal={{postal}}",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_postal",
+                                "value": "{{postal}}"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByType",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test('Returned data has the correct type', function () {\r",
+                                "    let jsonData = pm.response.json();\r",
+                                "\r",
+                                "    _.each(jsonData, brewery => {\r",
+                                "        pm.expect(brewery.brewery_type).to.eql(environment.type);\r",
+                                "    })\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_type={{type}}",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_type",
+                                "value": "{{type}}"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesPage",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                ""
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?page=2&per_page=5",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                    "key": "page",
+                                    "value": "2"
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "5"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesPerPage",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(`Returned data has ${environment.per_page} objects`, function () {\r",
+                                "    let jsonData = pm.response.json();\r",
+                                "\r",
+                                "    pm.expect(jsonData).to.have.length(environment.per_page);\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?per_page=2",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "per_page",
+                                "value": "2"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesSorted",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test('Response data is sorted by Name', function() {\r",
+                                "    let jsonData = pm.response.json();\r",
+                                "    let names = jsonData.map(el => el.name);\r",
+                                "    console.log(names);\r",
+                                "    console.log(names.sort((a, b) => a.localeCompare(b)))\r",
+                                "    pm.expect(names).to.eql(names.sort((a, b) => a.localeCompare(b)));\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?sort=name:asc",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "sort",
+                                "value": "name:asc"
+                            }]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "event": [{
+                    "listen": "prerequest",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            ""
+                        ]
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "pm.test('Status code is 200', function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Negative tests",
+            "item": [{
+                    "name": "GetBreweriesByDistOnlyLatitude",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(\"Status code is 400 with only latitude\", function () {\r",
+                                "    pm.response.to.have.status(400);\r",
+                                "});\r",
+                                "\r",
+                                "pm.test('Response body has correct error message', function () {\r",
+                                "    pm.expect(pm.response.text()).to.include('must provide latitude and longitude');\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_dist=38.8977",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_dist",
+                                "value": "38.8977"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByNonExistentType",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(\"Status code is 400 with non existent type\", function () {\r",
+                                "    pm.response.to.have.status(400);\r",
+                                "});\r",
+                                "\r",
+                                "pm.test('Response body has correct error message', function () {\r",
+                                "    pm.expect(pm.response.text()).to.include('type must include one of these types');\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_type=type",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_type",
+                                "value": "type"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByInvalidCity",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(\"Status code is 400 with non existent city\", function () {\r",
+                                "    pm.response.to.have.status(400);\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_city=1515152fsrsra",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_city",
+                                "value": "1515152fsrsra"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByInvalidName",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(\"Status code is 400 with non existent name\", function () {\r",
+                                "    pm.response.to.have.status(400);\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_name=1266d6s6",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_name",
+                                "value": "1266d6s6"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByInvalidState",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(\"Status code is 400 with not correct state\", function () {\r",
+                                "    pm.response.to.have.status(400);\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_state=n_y",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_state",
+                                "value": "n_y"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesByInvalidPostal",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(\"Status code is 400 with not correct postcode\", function () {\r",
+                                "    pm.response.to.have.status(400);\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?by_postal=12etetetew1",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "by_postal",
+                                "value": "12etetetew1"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesInvalidPage",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(\"Status code is 400 with not correct page number\", function () {\r",
+                                "    pm.response.to.have.status(400);\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?page=qwqw",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "page",
+                                "value": "qwqw"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesInvalidPerPage",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(\"Status code is 400 with not correct per page number\", function () {\r",
+                                "    pm.response.to.have.status(400);\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?per_page=pq1pa",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "per_page",
+                                "value": "pq1pa"
+                            }]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GetBreweriesInvalidSorted",
+                    "event": [{
+                        "listen": "test",
+                        "script": {
+                            "exec": [
+                                "pm.test(\"Status code is 400 with not correct sort options\", function () {\r",
+                                "    pm.response.to.have.status(400);\r",
+                                "});"
+                            ],
+                            "type": "text/javascript"
+                        }
+                    }],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.openbrewerydb.org/v1/breweries?sort=pas2:a12",
+                            "protocol": "https",
+                            "host": [
+                                "api",
+                                "openbrewerydb",
+                                "org"
+                            ],
+                            "path": [
+                                "v1",
+                                "breweries"
+                            ],
+                            "query": [{
+                                "key": "sort",
+                                "value": "pas2:a12"
+                            }]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "event": [{
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "pm.test('Content-Type is application/json', function () {",
+                    "    pm.response.to.have.header('Content-Type', 'application/json; charset=utf-8');",
+                    "});"
+                ]
+            }
+        }
+    ]
 }
