@@ -1,8 +1,5 @@
 const Page = require('./page')
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
 class Header extends Page {
     get header() {
         return $('.usa-header')
