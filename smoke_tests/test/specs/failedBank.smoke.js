@@ -51,4 +51,12 @@ describe('List of banks page', () => {
     it('should have wotking page navigation', async() => {
         await FailedBankListPage.checkPageNavigation(2)
     })
+
+    it('should have working sorting by name', async() => {
+        await FailedBankListPage.checkBankNameSorting()
+    })
+
+    it('should have clickable aside links', async() => {
+        await FailedBankListPage.assertAsideTestAreClickableLinks()
+    })
 })

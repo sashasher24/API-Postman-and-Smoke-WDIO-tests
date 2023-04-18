@@ -17,6 +17,14 @@ class FailedBankListPage extends Page {
         return $('.usa-input-search')
     }
 
+    get allBankNames() {
+        return $$('.dataTables-content-main a')
+    }
+
+    get asideLinks() {
+        return $$('aside a')
+    }
+
     async chooseNumberOfBanks(number) {
         await this.numberOfBanksSelect.click()
         await $(`#DataTables_Table_0_length option[value='${number}']`).click()
@@ -47,6 +55,26 @@ class FailedBankListPage extends Page {
 
         await pageToOpen.click()
         await expect(pageToOpen).toHaveAttributeContaining('class', 'current')
+    }
+
+    async checkBankNameSorting() {
+        let names = [];
+
+        await $$('.dataTables-content-header th')[0].click();
+        for (let i = 0; i < await this.allBankNames.length; i++) {
+            (await this.allBankNames[i]).getText().then(text =>
+                names.push(text)
+            )
+        }
+
+        expect(JSON.stringify(names) === JSON.stringify(names.sort((a, b) => (a > b ? 1 : -1)))).toBeTruthy()
+    }
+
+    async assertAsideTestAreClickableLinks() {
+        (await this.asideLinks).forEach(async link => {
+            await expect(link.toBeClickable())
+            await expect(link.toHaveAttribute('href'))
+        })
     }
 }
 
